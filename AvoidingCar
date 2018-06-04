@@ -1,0 +1,56 @@
+int enB = 4;
+int in3 = 2;
+int in4 = 3;
+
+int enA = 13;
+int in1 = 12;
+int in2 = 11;
+const int trigPin = 8;
+const int echoPin = 7;
+//long duration,distance;
+long duration,distance;
+void setup() {
+  
+  attachInterrupt(digitalPinToInterrupt(trigPin),UV_ISR,CHANGE);
+  // put your setup code here, to run once:
+  pinMode(enA, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+ pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+   pinMode(enB, OUTPUT);
+   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+  pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+  Serial.begin(9600);
+}
+void UV_ISR(){}
+void loop() {
+  
+  // put your main code here, to run repeatedly:
+  digitalWrite(in2, LOW);
+  digitalWrite(in1, HIGH);
+digitalWrite(in4, HIGH);
+  digitalWrite(in3, LOW);
+  
+
+  
+   digitalWrite(trigPin, LOW);  // Added this line
+  delayMicroseconds(2); // Added this line
+  digitalWrite(trigPin, HIGH);
+  //  delayMicroseconds(1000); - Removed this line
+  delayMicroseconds(15); // Added this line
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance= duration*0.034/2;
+  digitalWrite(enA, 156);
+  digitalWrite(enB, 156);
+ Serial.println(distance);
+  if(distance < 20){
+    
+    digitalWrite(enA, 156);
+    digitalWrite(enB,10);
+    Serial.print("opresc");
+  }
+  Serial.print("Distance: ");
+Serial.println(distance);
+}
